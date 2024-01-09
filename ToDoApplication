@@ -1,1 +1,92 @@
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class TodoListApp {
+    private static ArrayList<String> tasks = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            showMenu();
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+
+            switch (choice) {
+                case 1:
+                    addTask();
+                    break;
+                case 2:
+                    markTaskAsCompleted();
+                    break;
+                case 3:
+                    removeTask();
+                    break;
+                case 4:
+                    displayTasks();
+                    break;
+                case 5:
+                    System.out.println("Exiting the ToDo List Application. Goodbye!");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please choose a valid option.");
+            }
+        }
+    }
+
+    private static void showMenu() {
+        System.out.println("\n===== ToDo List Application =====");
+        System.out.println("1. Add Task");
+        System.out.println("2. Mark Task as Completed");
+        System.out.println("3. Remove Task");
+        System.out.println("4. Display Tasks");
+        System.out.println("5. Exit");
+        System.out.print("Enter your choice: ");
+    }
+
+    private static void addTask() {
+        System.out.print("Enter the task: ");
+        String task = scanner.nextLine();
+        tasks.add(task);
+        System.out.println("Task added: " + task);
+    }
+
+    private static void markTaskAsCompleted() {
+        System.out.print("Enter the index of the task to mark as completed: ");
+        int index = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        if (index >= 0 && index < tasks.size()) {
+            String task = tasks.get(index);
+            tasks.set(index, "[Completed] " + task);
+            System.out.println("Task marked as completed: " + task);
+        } else {
+            System.out.println("Invalid index. No task marked as completed.");
+        }
+    }
+
+    private static void removeTask() {
+        System.out.print("Enter the index of the task to remove: ");
+        int index = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        if (index >= 0 && index < tasks.size()) {
+            String removedTask = tasks.remove(index);
+            System.out.println("Task removed: " + removedTask);
+        } else {
+            System.out.println("Invalid index. No task removed.");
+        }
+    }
+
+    private static void displayTasks() {
+        System.out.println("\n===== Your ToDo List =====");
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks found.");
+        } else {
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println(i + ". " + tasks.get(i));
+            }
+        }
+    }
+}
